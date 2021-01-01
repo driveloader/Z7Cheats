@@ -19,7 +19,7 @@ local Utilities = {} do
         end
     
         if not LastChild then
-            warn("[Utilities]: Failed to locate: [" .. Path .. "].")
+            warn("[Locate Instance]: Failed to locate: [" .. Path .. "].")
         end
         
         return LastChild
