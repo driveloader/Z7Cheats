@@ -81,7 +81,10 @@ local ExploitFunctions = {
     GetRobloxEnvironment = getrenv
 }
 
-getgenv().Utilities = Utilities
+for i, v in pairs(Utilities) do
+    getgenv()[i] = v
+end
+
 for i, v in pairs(ExploitFunctions) do
     getgenv()[i] = v
 end
