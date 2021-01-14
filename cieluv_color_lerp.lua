@@ -1,3 +1,5 @@
+--// from https://devforum.roblox.com/t/cieluv-interpolator/27100
+
 local LerpCIELUV do
 
 	-- Combines two colors in CIELUV space.
