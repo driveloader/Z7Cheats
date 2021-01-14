@@ -1,6 +1,6 @@
 --// from https://devforum.roblox.com/t/cieluv-interpolator/27100
 
-local LerpCIELUV do
+local CIELUV = {} do
 
 	-- Combines two colors in CIELUV space.
 	-- function<function<Color3 result>(float t)>(Color3 fromColor, Color3 toColor)
@@ -30,7 +30,7 @@ local LerpCIELUV do
 		end
 	end
 
-	function LerpCIELUV(c0, c1)
+	function CIELUV:Lerp(c0, c1)
 		local l0, u0, v0 = RgbToLuv13(c0)
 		local l1, u1, v1 = RgbToLuv13(c1)
 
@@ -75,3 +75,5 @@ local LerpCIELUV do
 		end
 	end
 end
+
+return CIELUV
