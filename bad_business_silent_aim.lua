@@ -70,7 +70,7 @@ local function GetClosestPlayerCharacterToCursor()
 end
 
 local OldFireProjectile = TS.Projectiles.InitProjectile --// Making a backup of the old function so we can use it to spoof later on.
-TS.Projectiles.InitProjectile = function(self, ...) --// Hooking the function.
+TS.Projectiles.InitProjectile = function(self, ...) --// I can't explain self well, but in this situation it is just the Projectiles table. Hooking the function.
     local Arguments = {...} --// Converting the function arguments to a table.
     
     if shared.SilentAim.Enabled and Arguments[4] == LocalPlayer then
