@@ -81,7 +81,7 @@ TS.Projectiles.InitProjectile = function(self, ...) --// Hooking the function.
         --// Position: Arguments[2]
         --// Velocity: Arguments[3]
 
-        if ClosestPlayer and (ClosestPlayer.Health.Value > 0) then
+        if ClosestPlayer and (ClosestPlayer.Health.Value > 0) then --// Check if it returned a player and the player is alive.
             if HeadshotChance == 100 then --// If the random number hits 100 we goto the head because it got the top number.
                 Arguments[2] = (ClosestPlayer.Hitbox.Head.Position - Arguments[3])
             else
