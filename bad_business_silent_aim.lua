@@ -18,7 +18,7 @@ end
 local TS = nil
 for Index, Value in pairs(getgc(true)) do --// Looping through the garbage collection.
     if typeof(Value) == "table" and rawget(Value, "InitProjectile") then --// Seeing if we can find the Projectiles table by searching for the "InitProjectile" function that is paired to said table.
-        if Value.TS then --// If it has the games main module in it then we successfully found the game's main module.
+        if Value.TS then --// If it has the game's main module in it then we successfully found the game's main module.
             TS = Value.TS
             break
         end
