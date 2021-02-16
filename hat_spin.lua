@@ -4,9 +4,9 @@ local Players = game:GetService("Players")
 local LocalPlayer = Players.LocalPlayer
 local Character = LocalPlayer.Character
 
-local Flag = Character["Mini Pride Flag"] --// Open up dex, goto your player in the workspace, and find the name of the accessory you want to use. https://coasts.cool/uploads/jrZZAH3XsA2Sp0LqjkQg.png
+local Flag = Character[shared.AccessoryName] --// Open up dex, goto your player in the workspace, and find the name of the accessory you want to use. https://coasts.cool/uploads/jrZZAH3XsA2Sp0LqjkQg.png
 local Handle = Flag.Handle
-local Offset = 5
+local Offset = shared.Offset
 
 local NetworkConnection = nil
 NetworkConnection = RunService.RenderStepped:Connect(function()
