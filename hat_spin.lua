@@ -10,7 +10,7 @@ local Offset = shared.Offset
 
 local NetworkConnection = nil
 NetworkConnection = RunService.RenderStepped:Connect(function()
-    if not Character or not Character.Head then
+    if not Character or not Character:FindFirstChild("Head") then
         NetworkConnection:Disconnect()
     end
     
@@ -28,7 +28,7 @@ FlagFloatPart.Transparency = 1
 
 local PositionConnection = nil
 PositionConnection = RunService.RenderStepped:Connect(function()
-    if not Character or not Character.Head then
+    if not Character or not Character:FindFirstChild("Head") then
         PositionConnection:Disconnect()
     end
     
