@@ -10,12 +10,12 @@ local Offset = shared.Offset
 
 local NetworkConnection = nil
 NetworkConnection = RunService.RenderStepped:Connect(function()
-    if not Character or not Character:FindFirstChild("Head") then
+    if Character and Character:FindFirstChild("Head") then
+        setsimulationradius(math.huge, math.huge)
+        settings().Physics.AllowSleep = false
+    else
         NetworkConnection:Disconnect()
     end
-    
-    setsimulationradius(math.huge, math.huge)
-    settings().Physics.AllowSleep = false
 end)
 
 local FlagFloatPart = Instance.new("Part")
@@ -28,14 +28,13 @@ FlagFloatPart.Transparency = 1
 
 local PositionConnection = nil
 PositionConnection = RunService.RenderStepped:Connect(function()
-    if not Character or not Character:FindFirstChild("Head") then
+    if Character and Character:FindFirstChild("Head") then
+        FlagFloatPart.CFrame = (Character.Head.CFrame + Vector3.new(0, Offset, 0))
+    else
         PositionConnection:Disconnect()
     end
-    
-    if Character and Character.Head then
-        FlagFloatPart.CFrame = (Character.Head.CFrame + Vector3.new(0, Offset, 0))
-    end
 end)
+
 Handle.CustomPhysicalProperties = PhysicalProperties.new(0, 0, 0, 0, 0)
 Handle.CanCollide = false
 Handle:BreakJoints()
