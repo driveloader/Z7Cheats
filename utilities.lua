@@ -92,6 +92,9 @@ local ExploitFunctions = {
     GetScriptEnvironment = getsenv,
     GetRobloxEnvironment = getrenv
 }
+for i, v in pairs(Services) do
+    getgenv()[i] = v
+end
 
 for i, v in pairs(Utilities) do
     getgenv()[i] = v
