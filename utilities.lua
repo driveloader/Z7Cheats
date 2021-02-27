@@ -47,6 +47,18 @@ local Utilities = {} do
 end
 
 --// Services
+local Services = {
+    Players = game:GetService("Players"),
+    LocalPlayer = game:GetService("LocalPlayer"),
+    ReplicatedFirst = game:GetService("ReplicatedFirst"),
+    ReplicatedStorage = game:GetService("ReplicatedStorage"),
+    StarterGui = game:GetService("StarterGui"),
+    RunService = game:GetService("RunService"),
+    UserInputService = game:GetService("UserInputService"),
+    Debris = game:GetService("Debris")
+    
+}
+
 local ExploitFunctions = {
     HttpRequest = syn.request,
     GetGarbageCollection = getgc,
