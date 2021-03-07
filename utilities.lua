@@ -1,45 +1,19 @@
 local Utilities = {} do
-    function Utilities.Locate(Path)
-        local PathSplit = Path:split(".")
-        local Service = table.remove(PathSplit, 1)
-        local LastChild = nil
-        
-        if Service == "LocalPlayer" then
-            Service = game:GetService("Players").LocalPlayer
-        else
-            Service = game:GetService(Service)
-        end
-
-        for i, v in pairs(PathSplit) do
-            if i == 1 then
-                LastChild = Service:WaitForChild(v, 5)
-            else
-                LastChild = LastChild:WaitForChild(v, 5)
-            end
-        end
-    
-        if not LastChild then
-            warn("[Locate Instance]: Failed to locate: [" .. Path .. "].")
-        end
-        
-        return LastChild
-    end
-
-    function Utilities.Create(Object, Properties)
+    function Utilities:Create(Object, Properties)
         local Object = Instance.new(Object)
 
-        for i, v in pairs(Properties) do
-            Object[i] = v
+        for Property, Value in pairs(Properties) do
+            Object[Property] = Value
         end
 
         return Object
     end
 
-    function Utilities.CreateDrawing(Object, Properties)
+    function Utilities:CreateDrawing(Object, Properties)
         local Object = Drawing.new(Object)
 
-        for i, v in pairs(Properties) do
-            Object[i] = v
+        for Property, Value in pairs(Properties) do
+            Object[Property] = Value
         end
 
         return Object
@@ -92,14 +66,14 @@ local ExploitFunctions = {
     GetScriptEnvironment = getsenv,
     GetRobloxEnvironment = getrenv
 }
-for i, v in pairs(Services) do
-    getgenv()[i] = v
+for Index, Service in pairs(Services) do
+    getgenv()[Index] = Service
 end
 
-for i, v in pairs(Utilities) do
-    getgenv()[i] = v
+for Index, Function in pairs(Utilities) do
+    getgenv()[Index] = Function
 end
 
-for i, v in pairs(ExploitFunctions) do
-    getgenv()[i] = v
+for Index, ExploitFunction in pairs(ExploitFunctions) do
+    getgenv()[Index] = ExploitFunction
 end
