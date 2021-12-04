@@ -5,13 +5,9 @@ local Players = game:GetService("Players")
 local Teams = game:GetService("Teams")
 local LocalPlayer = Players.LocalPlayer
 
-local Exploit = (syn and "Synapse")
-local HttpRequest = syn.request 
 local GetGarbageCollection = getgc
 local MoveMouse = mousemoverel
-local ProtectGui = syn.protect_gui
 local IsLuaClosure = islclosure
-local IsExploitFunction = is_synapse_function
 local NewCClosure = newcclosure
 local HookFunction = hookfunction
 local WindowActive = iswindowactive
@@ -292,34 +288,19 @@ end
 
 local FOVCircle = Visuals:CreateDrawing("Circle")
 local Games = {
-    [113491250] = "Phantom Forces",
-    [1168263273] = "Bad Business"
+    [1954906532] = "RIOTFALL"
 }
 
 local Game = Games[game.GameId]
-if Game == "Phantom Forces" then
-    local GetBodyParts = nil
-    local GetPlayerHealth = nil
 
-    for Index, Value in pairs(GetGarbageCollection(true)) do
-        if typeof(Value) == "table" then 
-            if rawget(Value, "getbodyparts") then
-                GetBodyParts = Value.getbodyparts
-            end
-
-            if rawget(Value, "getplayerhealth") then
-                GetPlayerHealth = Value.getplayerhealth
-            end
-        end
-    end
-
-    if not GetBodyParts or not GetPlayerHealth then return end
-
+if Game == "RIOTFALL" then
     function PlayerUtilities:IsPlayerAlive(Player)
-        local PlayerHealth = GetPlayerHealth(Player, Player)
+        local Character = Player.Character
+        local Humanoid = (Character and Character:FindFirstChild("Humanoid"))
+        local Health = (Humanoid and Humanoid.Health)
 
-        if PlayerHealth then
-            if math.floor(PlayerHealth) > 0 then
+        if Character and Humanoid and Health then
+            if Health > 0 then
                 return true
             end
         end
@@ -328,78 +309,31 @@ if Game == "Phantom Forces" then
     end
 
     function PlayerUtilities:GetHealth(Player)
-        local PlayerHealth = GetPlayerHealth(Player, Player)
+        local Character = Player.Character
+        local Humanoid = (Character and Character:FindFirstChild("Humanoid"))
+        local Health, MaxHealth = (Humanoid and Humanoid.Health), (Humanoid and Humanoid.MaxHealth)
 
-        if PlayerHealth then
+        if Character and Humanoid and Health and MaxHealth then
             return {
-                CurrentHealth = math.floor(PlayerHealth),
-                MaxHealth = 100
+                CurrentHealth = Health,
+                MaxHealth = MaxHealth
             }
         end
     end
 
     function PlayerUtilities:GetBodyParts(Player)
-        local BodyParts = GetBodyParts(Player)
+        local Character = Player.Character
+        local CollisionGeo = (Character and Character:FindFirstChild("CollisionGeo"))
 
-        if BodyParts and BodyParts.rootpart then
-            return {
-                Character = BodyParts.rootpart.Parent,
-                Head = BodyParts.head,
-                Root = BodyParts.rootpart,
-                Torso = BodyParts.torso,
-                LeftArm = BodyParts.larm,
-                RightArm = BodyParts.rarm,
-                LeftLeg = BodyParts.lleg,
-                RightLeg = BodyParts.rleg
-            }
-        end
-    end
 
-    function PlayerUtilities:AimAt(Position, Smoothing)
-        local MouseLocation = UserInputService:GetMouseLocation()
-        Smoothing += 0.5
-        MoveMouse(((Position.X - MouseLocation.X) / Smoothing), ((Position.Y - MouseLocation.Y) / Smoothing))
-    end
-elseif Game == "Bad Business" then
-    local TS = require(ReplicatedStorage:WaitForChild("TS"))
-
-    function PlayerUtilities:IsPlayerAlive(Player)
-        local Character = TS.Characters:GetCharacter(Player)
-        local Health = (Character and Character:FindFirstChild("Health"))
-
-        if Character and Health then
-            if Health.Value > 0 then
-                return true
-            end
-        end
-
-        return false
-    end
-
-    function PlayerUtilities:GetHealth(Player)
-        local Character = TS.Characters:GetCharacter(Player)
-        local Health = (Character and Character:FindFirstChild("Health"))
-
-        if Character and (Health and Health:FindFirstChild("MaxHealth")) then
-            return {
-                CurrentHealth = Health.Value,
-                MaxHealth = Health.MaxHealth.Value
-            }
-        end
-    end
-
-    function PlayerUtilities:GetBodyParts(Player)
-        local Character = TS.Characters:GetCharacter(Player)
-        local Body = (Character and Character:FindFirstChild("Body"))
-
-        if Character and Body then
-            local Head = (Body and Body:FindFirstChild("Head"))
-            local Root = (Character and Character:FindFirstChild("Root"))
-            local Torso = (Body and Body:FindFirstChild("Chest"))
-            local LeftArm = (Body and Body:FindFirstChild("LeftArm"))
-            local RightArm = (Body and Body:FindFirstChild("RightArm"))
-            local LeftLeg = (Body and Body:FindFirstChild("LeftLeg"))
-            local RightLeg = (Body and Body:FindFirstChild("RightLeg"))
+        if Character and CollisionGeo then
+            local Head = (CollisionGeo and CollisionGeo:FindFirstChild("Head"))
+            local Root = (Character and Character:FindFirstChild("HumanoidRootPart"))
+            local Torso = (CollisionGeo and CollisionGeo:FindFirstChild("LowerTorso"))
+            local LeftArm = (CollisionGeo and CollisionGeo:FindFirstChild("LeftLowerArm"))
+            local RightArm = (CollisionGeo and CollisionGeo:FindFirstChild("RightLowerArm"))
+            local LeftLeg = (CollisionGeo and CollisionGeo:FindFirstChild("LeftLowerLeg"))
+            local RightLeg = (CollisionGeo and CollisionGeo:FindFirstChild("RightLowerLeg"))
 
             if Character and (Head and Root and Torso and LeftArm and RightArm and LeftLeg and RightLeg) then
                 return {
@@ -417,21 +351,14 @@ elseif Game == "Bad Business" then
     end
 
     function PlayerUtilities:GetDistanceFromClient(Position)
-        local ClientBodyParts = PlayerUtilities:GetBodyParts(LocalPlayer)
+        local Character = LocalPlayer.Character
+        local Root = (Character and Character:FindFirstChild("HumanoidRootPart"))
 
-        if ClientBodyParts then
-            return (Position - ClientBodyParts.Root.Position).Magnitude
+        if Character and Root then
+            return (Root.Position - Position).Magnitude
         end
 
         return 0
-    end
-
-    function PlayerUtilities:GetTeamColor(Player)
-        return Teams[TS.Teams:GetPlayerTeam(Player)].Color.Value
-    end
-
-    function PlayerUtilities:IsOnClientTeam(Player)
-        return TS.Teams:ArePlayersFriendly(Player, LocalPlayer)
     end
 end
 
@@ -613,3 +540,5 @@ UserInputService.InputBegan:Connect(function(Input, GameProcessedEvent)
         Library:Close()
     end
 end)
+
+warn("[universal]: Loaded! Game:", Game)
