@@ -12,7 +12,7 @@ local Events = ReplicatedStorage:WaitForChild("Events")
 local RecoilEvent = Events:WaitForChild("Recoil")
 local ShakeEvent = Events:WaitForChild("Shake")
 
-if not getgenv().Library then --// Pair with other scripts
+if not getgenv().Library then --// pair with my universal (https://github.com/coastss/universal)
     getgenv().Library = loadstring(game:HttpGet("https://raw.githubusercontent.com/coastss/universal/main/utilities/ui_library.lua"))()
 end
 
