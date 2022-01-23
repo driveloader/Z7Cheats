@@ -5,7 +5,7 @@ local Players = game:GetService("Players")
 local LocalPlayer = Players.LocalPlayer
 
 local EquippedWeapon = LocalPlayer.Character:WaitForChild("Equipped")
-local ItemScript = LocalPlayer:WaitForChild("PlayerScripts"):WaitForChild("ItemScript")
+local ItemScript = LocalPlayer.PlayerScripts:WaitForChild("ItemScript")
 local MouseModule = require(ReplicatedStorage:WaitForChild("Modules"):WaitForChild("Mouse"))
 
 local Events = ReplicatedStorage:WaitForChild("Events")
