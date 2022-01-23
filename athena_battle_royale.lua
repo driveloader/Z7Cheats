@@ -57,9 +57,10 @@ OldRayNew = hookfunction(Ray.new, function(...)
     
     if getfenv(2).script == ItemScript and Library.flags["Silent Aim Enabled"] then
         local ClosestPlayer = GetClosestPlayer()
-        local WeaponConfig = require(EquippedWeapon.Value.Config)
+        local WeaponConfig = require(EquippedWeapon.Value:FindFirstChild("Config"))
+        local Muzzle = (EquippedWeapon.Value:FindFirstChild("Handle") and EquippedWeapon.Value:FindFirstChild("Handle"):FindFirstChild("Muzzle"))
 
-        if (ClosestPlayer and ClosestPlayer.Character) and WeaponConfig then
+        if (ClosestPlayer and ClosestPlayer.Character) and WeaponConfig and Muzzle then
             local HitPart = ClosestPlayer.Character:FindFirstChild("HumanoidRootPart")
 
             if math.random(Library.flags["Silent Aim Headshot Chance"], 100) == 100 then
@@ -67,7 +68,7 @@ OldRayNew = hookfunction(Ray.new, function(...)
             end
 
             if HitPart then
-                Arguments[2] = (CFrame.new(EquippedWeapon.Value.Handle.Muzzle.WorldPosition, HitPart.Position).LookVector * 1500 --[[WeaponConfig.Range]])
+                Arguments[2] = (CFrame.new(Muzzle.WorldPosition, HitPart.Position).LookVector * WeaponConfig.Range)
             end
         end
     end
@@ -121,6 +122,7 @@ WeaponMods:AddToggle({text = "No Recoil", flag = "No Recoil"})
 WeaponMods:AddToggle({text = "No Shake", flag = "No Shake"})
 
 Library:Init()
+
 UserInputService.InputBegan:Connect(function(Input, GameProcessedEvent)
     if GameProcessedEvent then return end
     if Input.KeyCode == Enum.KeyCode.RightControl then
