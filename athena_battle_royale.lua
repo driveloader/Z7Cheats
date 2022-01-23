@@ -21,7 +21,7 @@ local function GetClosestPlayer()
     local FarthestDistance = math.huge
 
     for Index, Player in pairs(Players:GetPlayers()) do
-        if Player ~= LocalPlayer and (Player.Character and Player.Character:FindFirstChildWhichIsA("Humanoid").Health > 0)then
+        if Player ~= LocalPlayer and (Player.Character and Player.Character:FindFirstChildWhichIsA("Humanoid").Health > 0) then
             local HumanoidRootPart = Player.Character:FindFirstChild("HumanoidRootPart")
 
             if HumanoidRootPart then
