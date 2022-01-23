@@ -49,7 +49,7 @@ local function GetClosestPlayer()
 end
 
 --// Silent Aim
-local OldRayNew
+local OldRayNew = nil
 OldRayNew = hookfunction(Ray.new, function(...)
     local Arguments = {...}
     
