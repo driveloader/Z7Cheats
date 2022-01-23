@@ -48,7 +48,7 @@ local function GetClosestPlayer()
     return ClosestPlayer
 end
 
---// Silent aim
+--// Silent Aim
 local OldRayNew
 OldRayNew = hookfunction(Ray.new, function(...)
     local Arguments = {...}
@@ -73,7 +73,7 @@ OldRayNew = hookfunction(Ray.new, function(...)
     return OldRayNew(unpack(Arguments))
 end)
 
---// Weapon mods
+--// Weapon Mods
 local OldNameCall = nil
 OldNameCall = hookmetamethod(game, "__namecall", newcclosure(function(self, ...)
     local NamecallMethod = getnamecallmethod()
