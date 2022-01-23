@@ -5,14 +5,16 @@ local Players = game:GetService("Players")
 local LocalPlayer = Players.LocalPlayer
 
 local EquippedWeapon = LocalPlayer.Character:WaitForChild("Equipped")
-local ItemScript = LocalPlayer.PlayerScripts:WaitForChild("ItemScript")
+local ItemScript = LocalPlayer.PlayerScripts:WaitForChild("ItemScriptㅤ") --//  Wow the devs added a special character to prevent getting the script!!!!
 local MouseModule = require(ReplicatedStorage:WaitForChild("Modules"):WaitForChild("Mouse"))
 
 local Events = ReplicatedStorage:WaitForChild("Events")
 local RecoilEvent = Events:WaitForChild("Recoil")
 local ShakeEvent = Events:WaitForChild("Shake")
 
-local Library = loadstring(game:HttpGet("https://raw.githubusercontent.com/coastss/universal/main/utilities/ui_library.lua"))()
+if not getgenv().Library then --// Pair with other scripts
+    getgenv().Library = loadstring(game:HttpGet("https://raw.githubusercontent.com/coastss/universal/main/utilities/ui_library.lua"))()
+end
 
 local function GetClosestPlayer()
     if not LocalPlayer.Character then return end
@@ -65,7 +67,7 @@ OldRayNew = hookfunction(Ray.new, function(...)
             end
 
             if HitPart then
-                Arguments[2] = (CFrame.new(EquippedWeapon.Value.Handle.Muzzle.WorldPosition, HitPart.Position).LookVector * WeaponConfig.Range)
+                Arguments[2] = (CFrame.new(EquippedWeapon.Value.Handle.Muzzle.WorldPosition, HitPart.Position).LookVector * 1500 --[[WeaponConfig.Range]])
             end
         end
     end
